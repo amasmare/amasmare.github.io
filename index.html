@@ -1,316 +1,338 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>م. عبدالله الأسمري — المختبرات التفاعلية</title>
-<style>
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-[onclick]{cursor:pointer}
-:root{
-  --green:#006633;--green2:#00843d;--green3:#004d28;
-  --gold:#c9a227;--bg:#f0f4f0;--surface:#ffffff;--surface2:#f0f7f3;
-  --border:#c8ddd2;--text:#1a2e22;--muted:#4a7a5e;
-}
-body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;-webkit-text-size-adjust:100%}
-
-/* ── Canvas background ── */
-#bg-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;opacity:.35}
-
-/* ── Topbar ── */
-.topbar{background:var(--green3);border-bottom:1px solid #003820;padding:6px 30px;display:flex;align-items:center;justify-content:space-between;font-size:.72rem;color:#d4e8db;position:relative;z-index:10}
-.topbar .gold{color:var(--gold);font-weight:700}
-
-/* ── Main header ── */
-.site-header{background:linear-gradient(135deg,var(--green) 0%,var(--green2) 60%,var(--green3) 100%);border-bottom:4px solid var(--gold);padding:28px 40px;display:flex;align-items:center;gap:24px;flex-wrap:wrap;position:relative;z-index:10}
-.avatar{width:72px;height:72px;border-radius:50%;background:rgba(255,255,255,.18);border:3px solid rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;font-size:2.2rem;flex-shrink:0}
-.author-info{flex:1;min-width:0}
-.author-info h1{font-size:1.5rem;font-weight:800;color:#fff;margin-bottom:4px}
-.author-info p{font-size:.82rem;color:#d4e8db;line-height:1.6}
-.header-stats{display:flex;gap:20px;flex-wrap:wrap}
-.hstat{text-align:center;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:10px;padding:10px 18px}
-.hstat-num{display:block;font-size:1.4rem;font-weight:800;color:#fff}
-.hstat-label{display:block;font-size:.68rem;color:#d4e8db;margin-top:2px}
-
-/* ── Container ── */
-.container{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:40px 20px 60px}
-
-/* ── Hero ── */
-.hero{text-align:center;padding:50px 20px 40px}
-.hero-badge{display:inline-block;background:rgba(0,102,51,.1);border:1px solid var(--border);border-radius:30px;padding:6px 22px;font-size:.75rem;color:var(--green);letter-spacing:2px;margin-bottom:20px;text-transform:uppercase;font-weight:700}
-.hero h2{font-size:clamp(22px,4vw,42px);font-weight:800;color:var(--text);margin-bottom:14px;line-height:1.3}
-.hero p{font-size:clamp(14px,2vw,17px);color:var(--muted);max-width:580px;margin:0 auto 30px;line-height:1.8}
-.hero-divider{width:60px;height:4px;background:linear-gradient(90deg,var(--green),var(--gold));border-radius:4px;margin:0 auto 40px}
-
-/* ── Global stats bar ── */
-.global-stats{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-bottom:50px}
-.gstat{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 24px;text-align:center;min-width:110px;box-shadow:0 2px 8px rgba(0,102,51,.06)}
-.gstat-num{display:block;font-size:1.8rem;font-weight:800;color:var(--green)}
-.gstat-label{display:block;font-size:.7rem;color:var(--muted);margin-top:3px}
-
-/* ── Section title ── */
-.section-title{font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:24px;display:flex;align-items:center;gap:12px}
-.section-title::before{content:'';flex:1;height:2px;background:linear-gradient(270deg,var(--border),transparent)}
-
-/* ── Project cards ── */
-.projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px;margin-bottom:56px}
-.proj-card{background:var(--surface);border:1px solid var(--border);border-radius:18px;overflow:hidden;text-decoration:none;color:var(--text);display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s;box-shadow:0 2px 12px rgba(0,102,51,.06)}
-.proj-card:hover{transform:translateY(-5px);box-shadow:0 16px 40px rgba(0,102,51,.14)}
-.proj-card-top{height:7px}
-.proj-card-top.ccna{background:linear-gradient(90deg,#006633,#00843d)}
-.proj-card-top.server{background:linear-gradient(90deg,#0369a1,#0284c7)}
-.proj-card-top.forensics{background:linear-gradient(90deg,#7c3aed,#6d28d9)}
-.proj-body{padding:26px 24px 18px;flex:1}
-.proj-icon{width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin-bottom:16px}
-.proj-icon.ccna{background:rgba(0,102,51,.1)}
-.proj-icon.server{background:rgba(3,105,161,.1)}
-.proj-icon.forensics{background:rgba(124,58,237,.1)}
-.proj-label{font-size:.7rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;opacity:.7}
-.proj-title{font-size:1.15rem;font-weight:800;margin-bottom:8px;line-height:1.3}
-.proj-desc{font-size:.84rem;color:var(--muted);line-height:1.7;margin-bottom:16px}
-.proj-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
-.tag{background:rgba(0,102,51,.07);border:1px solid rgba(0,102,51,.15);border-radius:6px;padding:3px 10px;font-size:.72rem;color:var(--muted)}
-.proj-footer{padding:14px 24px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
-.proj-meta{font-size:.75rem;color:var(--muted)}
-.proj-btn{display:flex;align-items:center;gap:6px;font-size:.82rem;font-weight:700;color:var(--green);padding:7px 16px;border-radius:8px;border:1px solid rgba(0,102,51,.25);transition:all .2s}
-.proj-btn:hover{background:rgba(0,102,51,.08);border-color:var(--green)}
-.proj-stats{display:flex;gap:14px;margin-bottom:4px}
-.pstat{font-size:.75rem;color:var(--muted)}
-.pstat strong{color:var(--text);font-weight:700}
-
-/* ── About strip ── */
-.about-strip{background:linear-gradient(135deg,var(--surface2),var(--surface));border:1px solid var(--border);border-radius:16px;padding:28px 32px;display:flex;align-items:center;gap:24px;margin-bottom:50px;flex-wrap:wrap}
-.about-icon{font-size:3rem;flex-shrink:0}
-.about-text h3{font-size:1rem;font-weight:700;color:var(--green);margin-bottom:6px}
-.about-text p{font-size:.85rem;color:var(--muted);line-height:1.7}
-
-/* ── Skills section ── */
-.skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:50px}
-.skill-item{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px;display:flex;align-items:center;gap:12px}
-.skill-dot{width:10px;height:10px;border-radius:50%;background:var(--green);flex-shrink:0}
-.skill-name{font-size:.85rem;font-weight:600}
-
-/* ── Footer ── */
-.site-footer{background:var(--green);border-top:2px solid var(--green3);padding:30px 40px;text-align:center;position:relative;z-index:10}
-.site-footer p{color:#d4e8db;font-size:.8rem;line-height:2.2}
-.site-footer strong{color:var(--gold)}
-
-@media(max-width:600px){
-  .site-header{padding:20px;gap:16px}
-  .header-stats{gap:10px}.hstat{padding:8px 12px}
-  .hero{padding:30px 16px 24px}
-  .global-stats{gap:10px}.gstat{min-width:80px;padding:12px 14px}
-  .about-strip{flex-direction:column;text-align:center}
-  .proj-card-top{height:5px}
-}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Eng. Abdullah Alasmari — Information Systems Professional & Full-Stack Developer</title>
+  <meta name="description" content="Eng. Abdullah Mohammed Alasmari — SCE-accredited engineer, Information Systems professional & full-stack developer with 25+ years of experience. AI governance, SaaS, and mobile applications." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-
-<canvas id="bg-canvas"></canvas>
-
-<div class="topbar">
-  <span>🎓 بيئة تدريبية — للاستخدام الأكاديمي فقط</span>
-  <span class="gold">م. عبدالله الأسمري &nbsp;·&nbsp; Eng. Abdullah Alasmari</span>
-</div>
-
-<div class="site-header">
-  <div class="avatar">👨‍💻</div>
-  <div class="author-info">
-    <h1>م. عبدالله الأسمري</h1>
-    <p>Eng. Abdullah Alasmari &nbsp;·&nbsp; مختبرات تفاعلية في الشبكات وأمن المعلومات والتحليل الجنائي الرقمي<br>CompTIA CCNA · Server+ · CHFI</p>
-  </div>
-  <div class="header-stats">
-    <div class="hstat"><span class="hstat-num">3</span><span class="hstat-label">مشاريع</span></div>
-    <div class="hstat"><span class="hstat-num">29</span><span class="hstat-label">مختبر تفاعلي</span></div>
-    <div class="hstat"><span class="hstat-num">150+</span><span class="hstat-label">تمرين عملي</span></div>
-    <div class="hstat"><span class="hstat-num">100%</span><span class="hstat-label">بلا إنترنت</span></div>
-  </div>
-</div>
-
-<div class="container">
-
-  <div class="hero">
-    <div class="hero-badge">🚀 Interactive Learning Labs</div>
-    <h2>مختبرات تعليمية تفاعلية شاملة</h2>
-    <p>مجموعة متكاملة من المختبرات التفاعلية في الشبكات وإدارة الخوادم والتحليل الجنائي الرقمي. كل مختبر يُحاكي بيئة حقيقية ويعمل بالكامل داخل المتصفح دون أي برامج إضافية.</p>
-    <div class="hero-divider"></div>
-  </div>
-
-  <div class="global-stats">
-    <div class="gstat"><span class="gstat-num">10</span><span class="gstat-label">مختبر CCNA</span></div>
-    <div class="gstat"><span class="gstat-num">11</span><span class="gstat-label">مختبر Server+</span></div>
-    <div class="gstat"><span class="gstat-num">8</span><span class="gstat-label">مختبر CHFI</span></div>
-    <div class="gstat"><span class="gstat-num">60+</span><span class="gstat-label">اختبار معرفي</span></div>
-    <div class="gstat"><span class="gstat-num">AR</span><span class="gstat-label">باللغة العربية</span></div>
-  </div>
-
-  <div class="section-title">المشاريع التعليمية</div>
-
-  <div class="projects-grid">
-
-    <!-- CCNA -->
-    <a class="proj-card" href="https://amasmare.github.io/CCNA/" target="_blank">
-      <div class="proj-card-top ccna"></div>
-      <div class="proj-body">
-        <div class="proj-icon ccna">🌐</div>
-        <div class="proj-label">Cisco CCNA 200-301</div>
-        <div class="proj-title">مختبرات الشبكات التفاعلية</div>
-        <div class="proj-desc">محاكاة شاملة لجميع محاور شهادة CCNA — من أساسيات الشبكات حتى البروتوكولات المتقدمة وتأمين الشبكات.</div>
-        <div class="proj-stats">
-          <div class="pstat"><strong>10</strong> مختبرات</div>
-          <div class="pstat"><strong>40+</strong> تمرين</div>
-          <div class="pstat"><strong>11</strong> فصل</div>
-        </div>
-        <div class="proj-tags">
-          <span class="tag">TCP/IP</span><span class="tag">Routing</span><span class="tag">Switching</span>
-          <span class="tag">VLANs</span><span class="tag">Security</span><span class="tag">IPv6</span>
-        </div>
-      </div>
-      <div class="proj-footer">
-        <span class="proj-meta">📘 CCNA 200-301 Official Guide</span>
-        <span class="proj-btn">فتح المختبر ←</span>
-      </div>
-    </a>
-
-    <!-- Server+ -->
-    <a class="proj-card" href="https://amasmare.github.io/Servers/" target="_blank">
-      <div class="proj-card-top server"></div>
-      <div class="proj-body">
-        <div class="proj-icon server">🖥️</div>
-        <div class="proj-label">CompTIA Server+ SK0-005</div>
-        <div class="proj-title">مختبرات إدارة الخوادم</div>
-        <div class="proj-desc">تغطية كاملة لشهادة Server+ من عتاد الخوادم والتخزين والمحاكاة الافتراضية حتى الأمان والتعافي من الكوارث.</div>
-        <div class="proj-stats">
-          <div class="pstat"><strong>11</strong> مختبرات</div>
-          <div class="pstat"><strong>60+</strong> تمرين</div>
-          <div class="pstat"><strong>11</strong> فصل</div>
-        </div>
-        <div class="proj-tags">
-          <span class="tag">Hardware</span><span class="tag">RAID</span><span class="tag">Virtualization</span>
-          <span class="tag">Security</span><span class="tag">DR/Backup</span><span class="tag">Networking</span>
-        </div>
-      </div>
-      <div class="proj-footer">
-        <span class="proj-meta">📘 CompTIA Server+ SK0-005</span>
-        <span class="proj-btn">فتح المختبر ←</span>
-      </div>
-    </a>
-
-    <!-- CHFI / SecT -->
-    <a class="proj-card" href="https://amasmare.github.io/CHFI/" target="_blank">
-      <div class="proj-card-top forensics"></div>
-      <div class="proj-body">
-        <div class="proj-icon forensics">🔍</div>
-        <div class="proj-label">CHFI — Digital Forensics</div>
-        <div class="proj-title">مختبرات التحليل الجنائي الرقمي</div>
-        <div class="proj-desc">محاكاة تحقيقات جنائية رقمية حقيقية — تحليل الذاكرة، الأقراص، البرمجيات الخبيثة، التشفير، والجنائيات المتنقلة.</div>
-        <div class="proj-stats">
-          <div class="pstat"><strong>8</strong> مختبرات</div>
-          <div class="pstat"><strong>50+</strong> تمرين</div>
-          <div class="pstat"><strong>7</strong> مجالات</div>
-        </div>
-        <div class="proj-tags">
-          <span class="tag">Malware</span><span class="tag">RAM Forensics</span><span class="tag">Crypto</span>
-          <span class="tag">Web Forensics</span><span class="tag">Anti-Forensics</span><span class="tag">Mobile</span>
-        </div>
-      </div>
-      <div class="proj-footer">
-        <span class="proj-meta">📘 د. جميل حسين تويلح — CHFI</span>
-        <span class="proj-btn">فتح المختبر ←</span>
-      </div>
-    </a>
-
-  </div>
-
-  <div class="about-strip">
-    <div class="about-icon">🎯</div>
-    <div class="about-text">
-      <h3>عن هذه المختبرات</h3>
-      <p>صُمِّمت هذه المختبرات بهدف تحويل المفاهيم النظرية إلى تجارب تطبيقية تفاعلية يمكن تشغيلها مباشرةً في المتصفح دون الحاجة إلى أي برنامج أو اتصال بالإنترنت. تغطي المناهج الرسمية لشهادات CompTIA وCisco وEC-Council بالكامل باللغة العربية.</p>
+  <!-- NAV -->
+  <header class="nav" id="nav">
+    <div class="container nav__inner">
+      <a href="#home" class="nav__logo">AA<span>.</span></a>
+      <nav class="nav__links" id="navLinks">
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+        <a href="#contact" class="btn btn--sm">Hire me</a>
+      </nav>
+      <button class="nav__toggle" id="navToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
     </div>
-  </div>
+  </header>
 
-  <div class="section-title">التقنيات والمجالات المُغطّاة</div>
-  <div class="skills-grid">
-    <div class="skill-item"><div class="skill-dot"></div><div class="skill-name">شبكات Cisco (CCNA)</div></div>
-    <div class="skill-item"><div class="skill-dot"></div><div class="skill-name">إدارة الخوادم (Server+)</div></div>
-    <div class="skill-item"><div class="skill-dot"></div><div class="skill-name">التحليل الجنائي الرقمي</div></div>
-    <div class="skill-item"><div class="skill-dot"></div><div class="skill-name">تحليل البرمجيات الخبيثة</div></div>
-    <div class="skill-item"><div class="skill-dot"></div><div class="skill-name">بروتوكولات TCP/IP و IPv6</div></div>
-    <div class="skill-item"><div class="skill-dot"></div><div class="skill-name">RAID والتخزين المؤسسي</div></div>
-    <div class="skill-item"><div class="skill-dot"></div><div class="skill-name">المحاكاة الافتراضية</div></div>
-    <div class="skill-item"><div class="skill-dot"></div><div class="skill-name">التشفير وأمن البيانات</div></div>
-    <div class="skill-item"><div class="skill-dot"></div><div class="skill-name">التعافي من الكوارث</div></div>
-    <div class="skill-item"><div class="skill-dot"></div><div class="skill-name">جنائيات الشبكات والويب</div></div>
-    <div class="skill-item"><div class="skill-dot"></div><div class="skill-name">جنائيات الهواتف المحمولة</div></div>
-    <div class="skill-item"><div class="skill-dot"></div><div class="skill-name">أمن الشبكات والجدران النارية</div></div>
-  </div>
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero__bg"></div>
+    <div class="container hero__inner">
+      <p class="hero__eyebrow">👋 Hello, I'm</p>
+      <h1 class="hero__name">Eng. Abdullah Alasmari</h1>
+      <h2 class="hero__role">Information Systems professional &amp; full-stack developer<br /><span>AI governance · SaaS · mobile</span></h2>
+      <p class="hero__lede">
+        With <strong>25+ years</strong> in information systems and software engineering, I design and
+        ship production software — from multi-tenant SaaS platforms and mobile apps to AI-governance
+        tooling. Based in Saudi Arabia, building for the region and beyond.
+      </p>
+      <div class="hero__cta">
+        <a href="#contact" class="btn btn--primary">Contact for work →</a>
+        <a href="#projects" class="btn btn--ghost">View projects</a>
+      </div>
+      <div class="hero__badges">
+        <span class="badge">⏳ 25+ years experience</span>
+        <span class="badge">🛡 SCE Accredited Engineer · #414681</span>
+        <span class="badge">💼 Verified Freelancer · FL-758614965</span>
+        <span class="badge">🌍 Bilingual (EN / AR)</span>
+      </div>
+    </div>
+    <a href="#about" class="hero__scroll" aria-label="Scroll down">↓</a>
+  </section>
 
-</div>
+  <!-- ABOUT -->
+  <section class="section" id="about">
+    <div class="container">
+      <p class="section__kicker">01 — About</p>
+      <h2 class="section__title">Building reliable systems, end to end.</h2>
+      <div class="about">
+        <div class="about__text">
+          <p>
+            I'm an <strong>Information Systems professional</strong> with <strong>25+ years of
+            experience</strong> and a full-stack developer who turns ideas into working products.
+            My work spans the whole stack — backend services, databases, web frontends, and
+            cross-platform mobile apps — backed by an M.Sc. in Information Systems from
+            <strong>King Abdulaziz University</strong> and accreditation as a professional
+            <strong>Engineer</strong> by the <strong>Saudi Council of Engineers</strong>
+            (Computer Engineering Technology, membership #414681).
+          </p>
+          <p>
+            I care about software that actually ships and holds up in production: clean data models,
+            real-time features, payment integrations, and compliance with regional regulations like
+            Saudi <strong>PDPL</strong> and <strong>SDAIA</strong> AI ethics principles.
+          </p>
+          <p>
+            As a verified freelancer, I take on client projects across HR SaaS, fintech, monitoring,
+            and AI-governance tooling. If you have something to build, let's talk.
+          </p>
+        </div>
+        <div class="about__stats">
+          <div class="stat"><span class="stat__num">25+</span><span class="stat__label">Years experience</span></div>
+          <div class="stat"><span class="stat__num">8+</span><span class="stat__label">Projects shipped</span></div>
+          <div class="stat"><span class="stat__num">2</span><span class="stat__label">Live SaaS products</span></div>
+          <div class="stat"><span class="stat__num">EN/AR</span><span class="stat__label">Bilingual delivery</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<div class="site-footer">
-  <p>
-    صُمِّمت بواسطة <strong>م. عبدالله الأسمري</strong> · Eng. Abdullah Alasmari<br>
-    مختبرات تفاعلية · CCNA · Server+ · CHFI · جميع الحقوق محفوظة © 2025
-  </p>
-</div>
+  <!-- PROJECTS -->
+  <section class="section section--alt" id="projects">
+    <div class="container">
+      <p class="section__kicker">02 — Selected work</p>
+      <h2 class="section__title">Projects</h2>
 
-<script>
-// Animated network canvas
-const canvas = document.getElementById('bg-canvas');
-const ctx = canvas.getContext('2d');
-let nodes = [], W, H;
+      <div class="filters" id="filters">
+        <button class="filter is-active" data-filter="all">All</button>
+        <button class="filter" data-filter="saas">SaaS &amp; Web</button>
+        <button class="filter" data-filter="ai">AI &amp; Data</button>
+        <button class="filter" data-filter="mobile">Mobile</button>
+        <button class="filter" data-filter="edu">EdTech</button>
+        <button class="filter" data-filter="game">Games</button>
+      </div>
 
-function resize() {
-  W = canvas.width = window.innerWidth;
-  H = canvas.height = window.innerHeight;
-}
+      <div class="grid" id="projectGrid">
 
-function initNodes() {
-  nodes = [];
-  const count = Math.min(50, Math.floor(W * H / 22000));
-  for (let i = 0; i < count; i++) {
-    nodes.push({
-      x: Math.random() * W, y: Math.random() * H,
-      vx: (Math.random() - .5) * .5, vy: (Math.random() - .5) * .5,
-      r: Math.random() * 3 + 1.5,
-      gold: Math.random() < .18
-    });
-  }
-}
+        <!-- Riyada -->
+        <article class="card" data-cat="saas">
+          <div class="card__top">
+            <span class="card__tag">SaaS · HR</span>
+            <span class="card__live">● Live</span>
+          </div>
+          <h3 class="card__title">Riyada</h3>
+          <p class="card__desc">
+            Multi-tenant HR SaaS evolving into a full business operating system — employees,
+            payroll, attendance, leave, recruitment, performance, and benefits across 11 modules
+            with real-time notifications.
+          </p>
+          <ul class="card__stack">
+            <li>ASP.NET Core 8</li><li>MySQL</li><li>SignalR</li><li>EF Core</li>
+          </ul>
+          <div class="card__links">
+            <a href="https://riyada.cloud/" target="_blank" rel="noopener">Visit site ↗</a>
+          </div>
+        </article>
 
-function draw() {
-  ctx.clearRect(0, 0, W, H);
-  const maxDist = 140;
-  for (let i = 0; i < nodes.length; i++) {
-    const a = nodes[i];
-    for (let j = i + 1; j < nodes.length; j++) {
-      const b = nodes[j];
-      const dx = a.x - b.x, dy = a.y - b.y;
-      const dist = Math.sqrt(dx*dx + dy*dy);
-      if (dist < maxDist) {
-        ctx.beginPath();
-        ctx.moveTo(a.x, a.y);
-        ctx.lineTo(b.x, b.y);
-        ctx.strokeStyle = `rgba(0,102,51,${.18 * (1 - dist / maxDist)})`;
-        ctx.lineWidth = .8;
-        ctx.stroke();
-      }
-    }
-    ctx.beginPath();
-    ctx.arc(a.x, a.y, a.r, 0, Math.PI * 2);
-    ctx.fillStyle = a.gold ? 'rgba(201,162,39,.55)' : 'rgba(0,102,51,.45)';
-    ctx.fill();
-    a.x += a.vx; a.y += a.vy;
-    if (a.x < 0 || a.x > W) a.vx *= -1;
-    if (a.y < 0 || a.y > H) a.vy *= -1;
-  }
-  requestAnimationFrame(draw);
-}
+        <!-- TechFix -->
+        <article class="card" data-cat="mobile saas">
+          <div class="card__top">
+            <span class="card__tag">Mobile · Platform</span>
+            <span class="card__live">● Live</span>
+          </div>
+          <h3 class="card__title">TechFix</h3>
+          <p class="card__desc">
+            Device-repair platform with a customer mobile app, technician flow, and admin panel.
+            Service booking, repair tracking, JWT auth, and Saudi payment integration (Moyasar).
+          </p>
+          <ul class="card__stack">
+            <li>Flutter</li><li>ASP.NET Core</li><li>MySQL</li><li>Moyasar</li>
+          </ul>
+          <div class="card__links">
+            <a href="https://techfixapp.com/" target="_blank" rel="noopener">Website ↗</a>
+            <a href="https://apps.apple.com/sa/app/techfix/id6764766338" target="_blank" rel="noopener"> App Store ↗</a>
+            <a href="https://play.google.com/store/apps/details?id=techfix_app.com.techfix_app" target="_blank" rel="noopener">▶ Google Play ↗</a>
+          </div>
+        </article>
 
-resize(); initNodes(); draw();
-window.addEventListener('resize', () => { resize(); initNodes(); });
-</script>
+        <!-- IServe -->
+        <article class="card" data-cat="ai saas">
+          <div class="card__top">
+            <span class="card__tag">AI Governance</span>
+          </div>
+          <h3 class="card__title">IServe</h3>
+          <p class="card__desc">
+            An AI-governance assessment platform that scores an organization's maturity across
+            ethical governance, algorithmic transparency, and fairness — mapped to PDPL, SDAIA,
+            NDMO, GDPR Art. 22, and ISO 42001, with automated gap analysis and action plans.
+          </p>
+          <ul class="card__stack">
+            <li>ASP.NET Core 10</li><li>MySQL</li><li>EF Core</li><li>Bootstrap</li>
+          </ul>
+          <div class="card__links"><span class="card__muted">Case study available on request</span></div>
+        </article>
+
+        <!-- MySQLMonitor -->
+        <article class="card" data-cat="saas">
+          <div class="card__top">
+            <span class="card__tag">Monitoring</span>
+          </div>
+          <h3 class="card__title">Server &amp; DB Monitor</h3>
+          <p class="card__desc">
+            Real-time infrastructure monitoring — CPU, memory, disk and network metrics with
+            SNMP hardware discovery, live dashboards, and exportable reports.
+          </p>
+          <ul class="card__stack">
+            <li>ASP.NET Core 8</li><li>SignalR</li><li>SNMP</li><li>MySQL</li>
+          </ul>
+          <div class="card__links"><span class="card__muted">Internal tool</span></div>
+        </article>
+
+        <!-- Sham -->
+        <article class="card" data-cat="ai">
+          <div class="card__top">
+            <span class="card__tag">FinTech · Data</span>
+          </div>
+          <h3 class="card__title">Sham — Elliott Wave Scanner</h3>
+          <p class="card__desc">
+            A market-analysis tool that detects Elliott Wave patterns across US equities, ranking
+            tickers by a confidence score built on wave rules and Fibonacci ratios. CLI + web UI
+            with backtesting.
+          </p>
+          <ul class="card__stack">
+            <li>Python</li><li>Streamlit</li><li>Pandas</li><li>NumPy</li>
+          </ul>
+          <div class="card__links"><span class="card__muted">MVP</span></div>
+        </article>
+
+        <!-- Football Analytics -->
+        <article class="card" data-cat="ai mobile">
+          <div class="card__top">
+            <span class="card__tag">Sports Analytics</span>
+          </div>
+          <h3 class="card__title">Football Analytics Platform</h3>
+          <p class="card__desc">
+            Match and player analytics tailored for Saudi Pro League clubs — data ingestion,
+            modeling, and rich visualizations across web and mobile.
+          </p>
+          <ul class="card__stack">
+            <li>FastAPI</li><li>React + TS</li><li>Flutter</li><li>PostgreSQL</li>
+          </ul>
+          <div class="card__links"><span class="card__muted">Early MVP</span></div>
+        </article>
+
+        <!-- Lab platforms -->
+        <article class="card" data-cat="edu">
+          <div class="card__top">
+            <span class="card__tag">EdTech</span>
+            <span class="card__live">● Live</span>
+          </div>
+          <h3 class="card__title">Interactive Certification Labs</h3>
+          <p class="card__desc">
+            Browser-based, bilingual training labs for industry certifications — interactive
+            exercises with progress tracking, no install required.
+          </p>
+          <ul class="card__stack">
+            <li>HTML5</li><li>CSS3</li><li>JavaScript</li><li>Bootstrap</li>
+          </ul>
+          <div class="card__links">
+            <a href="https://amasmare.github.io/labs/" target="_blank" rel="noopener">All Labs ↗</a>
+            <a href="https://amasmare.github.io/CCNA/" target="_blank" rel="noopener">CCNA ↗</a>
+            <a href="https://amasmare.github.io/Servers/" target="_blank" rel="noopener">Server+ ↗</a>
+            <a href="https://amasmare.github.io/CHFI/" target="_blank" rel="noopener">CHFI ↗</a>
+          </div>
+        </article>
+
+        <!-- Paintfall -->
+        <article class="card" data-cat="game">
+          <div class="card__top">
+            <span class="card__tag">Game</span>
+            <span class="card__live">● On Steam</span>
+          </div>
+          <h3 class="card__title">Paintfall</h3>
+          <p class="card__desc">
+            A game built in Unreal Engine 5 with Steam integration — gameplay, packaging,
+            and distribution handled end to end. Currently live on Steam in testing.
+          </p>
+          <ul class="card__stack">
+            <li>Unreal Engine 5</li><li>C++ / Blueprints</li><li>Steamworks</li>
+          </ul>
+          <div class="card__links"><span class="card__muted">On Steam · testing</span></div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="section" id="skills">
+    <div class="container">
+      <p class="section__kicker">03 — Toolbox</p>
+      <h2 class="section__title">Skills &amp; technologies</h2>
+      <div class="skills">
+        <div class="skillset">
+          <h3>Backend</h3>
+          <div class="chips"><span>C# / .NET</span><span>ASP.NET Core</span><span>Python</span><span>FastAPI</span><span>Dart</span><span>REST APIs</span><span>SignalR</span></div>
+        </div>
+        <div class="skillset">
+          <h3>Frontend &amp; Mobile</h3>
+          <div class="chips"><span>Flutter</span><span>React</span><span>TypeScript</span><span>JavaScript</span><span>HTML5</span><span>CSS3</span><span>Bootstrap</span></div>
+        </div>
+        <div class="skillset">
+          <h3>Data &amp; Infra</h3>
+          <div class="chips"><span>MySQL</span><span>PostgreSQL</span><span>SQL Server</span><span>EF Core</span><span>Pandas</span><span>Docker</span><span>Redis</span></div>
+        </div>
+        <div class="skillset">
+          <h3>Domains</h3>
+          <div class="chips"><span>AI Governance</span><span>PDPL / SDAIA</span><span>SaaS Architecture</span><span>Payments</span><span>Monitoring</span><span>Game Dev (UE5)</span></div>
+        </div>
+        <div class="skillset">
+          <h3>Information Systems &amp; Leadership</h3>
+          <div class="chips"><span>Software Engineering</span><span>Systems Analysis &amp; Design</span><span>Decision Making</span><span>Requirements Engineering</span><span>Project Management</span><span>Database Design</span><span>IT Strategy</span><span>Business Process Modeling</span><span>Solution Architecture</span><span>Team Leadership</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section section--alt" id="contact">
+    <div class="container contact">
+      <p class="section__kicker">04 — Contact</p>
+      <h2 class="section__title">Let's build something.</h2>
+      <p class="contact__lede">
+        Available for freelance and contract work. Whether it's a SaaS product, a mobile app,
+        or an AI-governance system — reach out and let's talk.
+      </p>
+      <div class="contact__actions">
+        <a href="mailto:alasmari@gmail.com?subject=Project%20inquiry" class="btn btn--primary btn--lg">✉ Contact for work</a>
+      </div>
+      <div class="contact__grid">
+        <a class="link-card" href="mailto:alasmari@gmail.com">
+          <span class="link-card__icon">✉</span>
+          <span><strong>Email</strong><br />alasmari@gmail.com</span>
+        </a>
+        <a class="link-card" href="https://wa.me/966556306304" target="_blank" rel="noopener">
+          <span class="link-card__icon">✆</span>
+          <span><strong>WhatsApp</strong><br />+966 55 630 6304</span>
+        </a>
+        <a class="link-card" href="https://www.linkedin.com/in/eng-al-asmari/" target="_blank" rel="noopener">
+          <span class="link-card__icon">in</span>
+          <span><strong>LinkedIn</strong><br />eng-al-asmari</span>
+        </a>
+        <a class="link-card" href="https://amasmare.github.io/" target="_blank" rel="noopener">
+          <span class="link-card__icon">⌘</span>
+          <span><strong>GitHub Pages</strong><br />amasmare.github.io</span>
+        </a>
+        <div class="link-card link-card--static">
+          <span class="link-card__icon">✓</span>
+          <span><strong>Verified Freelancer</strong><br />License FL-758614965</span>
+        </div>
+        <div class="link-card link-card--static">
+          <span class="link-card__icon">🛡</span>
+          <span><strong>SCE Accredited Engineer</strong><br />Membership #414681</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <span>© <span id="year"></span> Eng. Abdullah Mohammed Alasmari</span>
+      <span class="footer__made">Built with HTML · CSS · JS</span>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
