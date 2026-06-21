@@ -7,7 +7,7 @@
   <meta name="description" content="Eng. Abdullah Mohammed Alasmari — SCE-accredited engineer, Information Systems professional & full-stack developer with 25+ years of experience. AI governance, SaaS, and mobile applications." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -16,12 +16,13 @@
     <div class="container nav__inner">
       <a href="#home" class="nav__logo">AA<span>.</span></a>
       <nav class="nav__links" id="navLinks">
-        <a href="#about">About</a>
-        <a href="#projects">Projects</a>
-        <a href="#skills">Skills</a>
-        <a href="#contact">Contact</a>
-        <a href="#contact" class="btn btn--sm">Hire me</a>
+        <a href="#about" data-i18n="nav.about">About</a>
+        <a href="#projects" data-i18n="nav.projects">Projects</a>
+        <a href="#skills" data-i18n="nav.skills">Skills</a>
+        <a href="#contact" data-i18n="nav.contact">Contact</a>
+        <a href="#contact" class="btn btn--sm" data-i18n="nav.hire">Hire me</a>
       </nav>
+      <button class="lang-btn" id="langToggle" aria-label="Switch language">🌐 <span id="langLabel">العربية</span></button>
       <button class="nav__toggle" id="navToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
     </div>
   </header>
@@ -30,36 +31,52 @@
   <section class="hero" id="home">
     <div class="hero__bg"></div>
     <div class="container hero__inner">
-      <p class="hero__eyebrow">👋 Hello, I'm</p>
-      <h1 class="hero__name">Eng. Abdullah Alasmari</h1>
-      <h2 class="hero__role">Information Systems professional &amp; full-stack developer<br /><span>AI governance · SaaS · mobile</span></h2>
-      <p class="hero__lede">
+      <p class="hero__eyebrow" data-i18n="hero.eyebrow">👋 Hello, I'm</p>
+      <h1 class="hero__name" data-i18n="hero.name">Eng. Abdullah Alasmari</h1>
+      <h2 class="hero__role" data-i18n="hero.role">Information Systems professional &amp; full-stack developer<br /><span>AI governance · SaaS · mobile</span></h2>
+      <p class="hero__lede" data-i18n="hero.lede">
         With <strong>25+ years</strong> in information systems and software engineering, I design and
         ship production software — from multi-tenant SaaS platforms and mobile apps to AI-governance
         tooling. Based in Saudi Arabia, building for the region and beyond.
       </p>
       <div class="hero__cta">
-        <a href="#contact" class="btn btn--primary">Contact for work →</a>
-        <a href="#projects" class="btn btn--ghost">View projects</a>
-      </div>
-      <div class="hero__badges">
-        <span class="badge">⏳ 25+ years experience</span>
-        <span class="badge">🛡 SCE Accredited Engineer · #414681</span>
-        <span class="badge">💼 Verified Freelancer · FL-758614965</span>
-        <span class="badge">🌍 Bilingual (EN / AR)</span>
+        <a href="#contact" class="btn btn--primary" data-i18n="hero.cta1">Contact for work →</a>
+        <a href="#projects" class="btn btn--ghost" data-i18n="hero.cta2">View projects</a>
       </div>
     </div>
     <a href="#about" class="hero__scroll" aria-label="Scroll down">↓</a>
   </section>
 
+  <!-- CREDENTIALS STRIP -->
+  <section class="creds">
+    <div class="container creds__inner">
+      <div class="cred">
+        <span class="cred__icon">🎓</span>
+        <span class="cred__text"><strong data-i18n="creds.msc.t">M.Sc. Information Systems</strong><br /><span data-i18n="creds.msc.s">King Abdulaziz University</span></span>
+      </div>
+      <div class="cred">
+        <span class="cred__icon">🛡</span>
+        <span class="cred__text"><strong data-i18n="creds.sce.t">SCE Accredited Engineer</strong><br /><span data-i18n="creds.sce.s">Membership #414681</span></span>
+      </div>
+      <div class="cred">
+        <span class="cred__icon">⏳</span>
+        <span class="cred__text"><strong data-i18n="creds.exp.t">25+ Years Experience</strong><br /><span data-i18n="creds.exp.s">Information Systems &amp; Engineering</span></span>
+      </div>
+      <div class="cred">
+        <span class="cred__icon">✓</span>
+        <span class="cred__text"><strong data-i18n="creds.fl.t">Verified Freelancer</strong><br /><span data-i18n="creds.fl.s">License FL-758614965</span></span>
+      </div>
+    </div>
+  </section>
+
   <!-- ABOUT -->
   <section class="section" id="about">
     <div class="container">
-      <p class="section__kicker">01 — About</p>
-      <h2 class="section__title">Building reliable systems, end to end.</h2>
+      <p class="section__kicker"><span class="num">01</span> — <span data-i18n="about.kicker">About</span></p>
+      <h2 class="section__title" data-i18n="about.title">Building reliable systems, end to end.</h2>
       <div class="about">
         <div class="about__text">
-          <p>
+          <p data-i18n="about.p1">
             I'm an <strong>Information Systems professional</strong> with <strong>25+ years of
             experience</strong> and a full-stack developer who turns ideas into working products.
             My work spans the whole stack — backend services, databases, web frontends, and
@@ -68,21 +85,21 @@
             <strong>Engineer</strong> by the <strong>Saudi Council of Engineers</strong>
             (Computer Engineering Technology, membership #414681).
           </p>
-          <p>
+          <p data-i18n="about.p2">
             I care about software that actually ships and holds up in production: clean data models,
             real-time features, payment integrations, and compliance with regional regulations like
             Saudi <strong>PDPL</strong> and <strong>SDAIA</strong> AI ethics principles.
           </p>
-          <p>
+          <p data-i18n="about.p3">
             As a verified freelancer, I take on client projects across HR SaaS, fintech, monitoring,
             and AI-governance tooling. If you have something to build, let's talk.
           </p>
         </div>
         <div class="about__stats">
-          <div class="stat"><span class="stat__num">25+</span><span class="stat__label">Years experience</span></div>
-          <div class="stat"><span class="stat__num">8+</span><span class="stat__label">Projects shipped</span></div>
-          <div class="stat"><span class="stat__num">2</span><span class="stat__label">Live SaaS products</span></div>
-          <div class="stat"><span class="stat__num">EN/AR</span><span class="stat__label">Bilingual delivery</span></div>
+          <div class="stat"><span class="stat__num">25+</span><span class="stat__label" data-i18n="about.stat1">Years experience</span></div>
+          <div class="stat"><span class="stat__num">8+</span><span class="stat__label" data-i18n="about.stat2">Projects shipped</span></div>
+          <div class="stat"><span class="stat__num">2</span><span class="stat__label" data-i18n="about.stat3">Live SaaS products</span></div>
+          <div class="stat"><span class="stat__num">EN/AR</span><span class="stat__label" data-i18n="about.stat4">Bilingual delivery</span></div>
         </div>
       </div>
     </div>
@@ -91,16 +108,16 @@
   <!-- PROJECTS -->
   <section class="section section--alt" id="projects">
     <div class="container">
-      <p class="section__kicker">02 — Selected work</p>
-      <h2 class="section__title">Projects</h2>
+      <p class="section__kicker"><span class="num">02</span> — <span data-i18n="proj.kicker">Selected work</span></p>
+      <h2 class="section__title" data-i18n="proj.title">Projects</h2>
 
       <div class="filters" id="filters">
-        <button class="filter is-active" data-filter="all">All</button>
-        <button class="filter" data-filter="saas">SaaS &amp; Web</button>
-        <button class="filter" data-filter="ai">AI &amp; Data</button>
-        <button class="filter" data-filter="mobile">Mobile</button>
-        <button class="filter" data-filter="edu">EdTech</button>
-        <button class="filter" data-filter="game">Games</button>
+        <button class="filter is-active" data-filter="all" data-i18n="filter.all">All</button>
+        <button class="filter" data-filter="saas" data-i18n="filter.saas">SaaS &amp; Web</button>
+        <button class="filter" data-filter="ai" data-i18n="filter.ai">AI &amp; Data</button>
+        <button class="filter" data-filter="mobile" data-i18n="filter.mobile">Mobile</button>
+        <button class="filter" data-filter="edu" data-i18n="filter.edu">EdTech</button>
+        <button class="filter" data-filter="game" data-i18n="filter.game">Games</button>
       </div>
 
       <div class="grid" id="projectGrid">
@@ -108,11 +125,11 @@
         <!-- Riyada -->
         <article class="card" data-cat="saas">
           <div class="card__top">
-            <span class="card__tag">SaaS · HR</span>
-            <span class="card__live">● Live</span>
+            <span class="card__tag" data-i18n="riyada.tag">SaaS · HR</span>
+            <span class="card__live" data-i18n="live">● Live</span>
           </div>
           <h3 class="card__title">Riyada</h3>
-          <p class="card__desc">
+          <p class="card__desc" data-i18n="riyada.desc">
             Multi-tenant HR SaaS evolving into a full business operating system — employees,
             payroll, attendance, leave, recruitment, performance, and benefits across 11 modules
             with real-time notifications.
@@ -121,18 +138,18 @@
             <li>ASP.NET Core 8</li><li>MySQL</li><li>SignalR</li><li>EF Core</li>
           </ul>
           <div class="card__links">
-            <a href="https://riyada.cloud/" target="_blank" rel="noopener">Visit site ↗</a>
+            <a href="https://riyada.cloud/" target="_blank" rel="noopener" data-i18n="link.visit">Visit site ↗</a>
           </div>
         </article>
 
         <!-- TechFix -->
         <article class="card" data-cat="mobile saas">
           <div class="card__top">
-            <span class="card__tag">Mobile · Platform</span>
-            <span class="card__live">● Live</span>
+            <span class="card__tag" data-i18n="techfix.tag">Mobile · Platform</span>
+            <span class="card__live" data-i18n="live">● Live</span>
           </div>
           <h3 class="card__title">TechFix</h3>
-          <p class="card__desc">
+          <p class="card__desc" data-i18n="techfix.desc">
             Device-repair platform with a customer mobile app, technician flow, and admin panel.
             Service booking, repair tracking, JWT auth, and Saudi payment integration (Moyasar).
           </p>
@@ -140,7 +157,7 @@
             <li>Flutter</li><li>ASP.NET Core</li><li>MySQL</li><li>Moyasar</li>
           </ul>
           <div class="card__links">
-            <a href="https://techfixapp.com/" target="_blank" rel="noopener">Website ↗</a>
+            <a href="https://techfixapp.com/" target="_blank" rel="noopener" data-i18n="link.website">Website ↗</a>
             <a href="https://apps.apple.com/sa/app/techfix/id6764766338" target="_blank" rel="noopener"> App Store ↗</a>
             <a href="https://play.google.com/store/apps/details?id=techfix_app.com.techfix_app" target="_blank" rel="noopener">▶ Google Play ↗</a>
           </div>
@@ -149,10 +166,10 @@
         <!-- IServe -->
         <article class="card" data-cat="ai saas">
           <div class="card__top">
-            <span class="card__tag">AI Governance</span>
+            <span class="card__tag" data-i18n="iserve.tag">AI Governance</span>
           </div>
           <h3 class="card__title">IServe</h3>
-          <p class="card__desc">
+          <p class="card__desc" data-i18n="iserve.desc">
             An AI-governance assessment platform that scores an organization's maturity across
             ethical governance, algorithmic transparency, and fairness — mapped to PDPL, SDAIA,
             NDMO, GDPR Art. 22, and ISO 42001, with automated gap analysis and action plans.
@@ -160,32 +177,32 @@
           <ul class="card__stack">
             <li>ASP.NET Core 10</li><li>MySQL</li><li>EF Core</li><li>Bootstrap</li>
           </ul>
-          <div class="card__links"><span class="card__muted">Case study available on request</span></div>
+          <div class="card__links"><span class="card__muted" data-i18n="iserve.muted">Case study available on request</span></div>
         </article>
 
         <!-- MySQLMonitor -->
         <article class="card" data-cat="saas">
           <div class="card__top">
-            <span class="card__tag">Monitoring</span>
+            <span class="card__tag" data-i18n="monitor.tag">Monitoring</span>
           </div>
-          <h3 class="card__title">Server &amp; DB Monitor</h3>
-          <p class="card__desc">
+          <h3 class="card__title" data-i18n="monitor.title">Server &amp; DB Monitor</h3>
+          <p class="card__desc" data-i18n="monitor.desc">
             Real-time infrastructure monitoring — CPU, memory, disk and network metrics with
             SNMP hardware discovery, live dashboards, and exportable reports.
           </p>
           <ul class="card__stack">
             <li>ASP.NET Core 8</li><li>SignalR</li><li>SNMP</li><li>MySQL</li>
           </ul>
-          <div class="card__links"><span class="card__muted">Internal tool</span></div>
+          <div class="card__links"><span class="card__muted" data-i18n="monitor.muted">Internal tool</span></div>
         </article>
 
         <!-- Sham -->
         <article class="card" data-cat="ai">
           <div class="card__top">
-            <span class="card__tag">FinTech · Data</span>
+            <span class="card__tag" data-i18n="sham.tag">FinTech · Data</span>
           </div>
-          <h3 class="card__title">Sham — Elliott Wave Scanner</h3>
-          <p class="card__desc">
+          <h3 class="card__title" data-i18n="sham.title">Sham — Elliott Wave Scanner</h3>
+          <p class="card__desc" data-i18n="sham.desc">
             A market-analysis tool that detects Elliott Wave patterns across US equities, ranking
             tickers by a confidence score built on wave rules and Fibonacci ratios. CLI + web UI
             with backtesting.
@@ -193,33 +210,33 @@
           <ul class="card__stack">
             <li>Python</li><li>Streamlit</li><li>Pandas</li><li>NumPy</li>
           </ul>
-          <div class="card__links"><span class="card__muted">MVP</span></div>
+          <div class="card__links"><span class="card__muted" data-i18n="mvp">MVP</span></div>
         </article>
 
         <!-- Football Analytics -->
         <article class="card" data-cat="ai mobile">
           <div class="card__top">
-            <span class="card__tag">Sports Analytics</span>
+            <span class="card__tag" data-i18n="football.tag">Sports Analytics</span>
           </div>
-          <h3 class="card__title">Football Analytics Platform</h3>
-          <p class="card__desc">
+          <h3 class="card__title" data-i18n="football.title">Football Analytics Platform</h3>
+          <p class="card__desc" data-i18n="football.desc">
             Match and player analytics tailored for Saudi Pro League clubs — data ingestion,
             modeling, and rich visualizations across web and mobile.
           </p>
           <ul class="card__stack">
             <li>FastAPI</li><li>React + TS</li><li>Flutter</li><li>PostgreSQL</li>
           </ul>
-          <div class="card__links"><span class="card__muted">Early MVP</span></div>
+          <div class="card__links"><span class="card__muted" data-i18n="football.muted">Early MVP</span></div>
         </article>
 
         <!-- Lab platforms -->
         <article class="card" data-cat="edu">
           <div class="card__top">
-            <span class="card__tag">EdTech</span>
-            <span class="card__live">● Live</span>
+            <span class="card__tag" data-i18n="labs.tag">EdTech</span>
+            <span class="card__live" data-i18n="live">● Live</span>
           </div>
-          <h3 class="card__title">Interactive Certification Labs</h3>
-          <p class="card__desc">
+          <h3 class="card__title" data-i18n="labs.title">Interactive Certification Labs</h3>
+          <p class="card__desc" data-i18n="labs.desc">
             Browser-based, bilingual training labs for industry certifications — interactive
             exercises with progress tracking, no install required.
           </p>
@@ -227,7 +244,7 @@
             <li>HTML5</li><li>CSS3</li><li>JavaScript</li><li>Bootstrap</li>
           </ul>
           <div class="card__links">
-            <a href="https://amasmare.github.io/labs/" target="_blank" rel="noopener">All Labs ↗</a>
+            <a href="https://amasmare.github.io/labs/" target="_blank" rel="noopener" data-i18n="labs.all">All Labs ↗</a>
             <a href="https://amasmare.github.io/CCNA/" target="_blank" rel="noopener">CCNA ↗</a>
             <a href="https://amasmare.github.io/Servers/" target="_blank" rel="noopener">Server+ ↗</a>
             <a href="https://amasmare.github.io/CHFI/" target="_blank" rel="noopener">CHFI ↗</a>
@@ -237,18 +254,18 @@
         <!-- Paintfall -->
         <article class="card" data-cat="game">
           <div class="card__top">
-            <span class="card__tag">Game</span>
-            <span class="card__live">● On Steam</span>
+            <span class="card__tag" data-i18n="paintfall.tag">Game</span>
+            <span class="card__live" data-i18n="paintfall.live">● On Steam</span>
           </div>
           <h3 class="card__title">Paintfall</h3>
-          <p class="card__desc">
+          <p class="card__desc" data-i18n="paintfall.desc">
             A game built in Unreal Engine 5 with Steam integration — gameplay, packaging,
             and distribution handled end to end. Currently live on Steam in testing.
           </p>
           <ul class="card__stack">
             <li>Unreal Engine 5</li><li>C++ / Blueprints</li><li>Steamworks</li>
           </ul>
-          <div class="card__links"><span class="card__muted">On Steam · testing</span></div>
+          <div class="card__links"><span class="card__muted" data-i18n="paintfall.muted">On Steam · testing</span></div>
         </article>
 
       </div>
@@ -258,28 +275,28 @@
   <!-- SKILLS -->
   <section class="section" id="skills">
     <div class="container">
-      <p class="section__kicker">03 — Toolbox</p>
-      <h2 class="section__title">Skills &amp; technologies</h2>
+      <p class="section__kicker"><span class="num">03</span> — <span data-i18n="skills.kicker">Toolbox</span></p>
+      <h2 class="section__title" data-i18n="skills.title">Skills &amp; technologies</h2>
       <div class="skills">
         <div class="skillset">
-          <h3>Backend</h3>
+          <h3 data-i18n="skills.g1">Backend</h3>
           <div class="chips"><span>C# / .NET</span><span>ASP.NET Core</span><span>Python</span><span>FastAPI</span><span>Dart</span><span>REST APIs</span><span>SignalR</span></div>
         </div>
         <div class="skillset">
-          <h3>Frontend &amp; Mobile</h3>
+          <h3 data-i18n="skills.g2">Frontend &amp; Mobile</h3>
           <div class="chips"><span>Flutter</span><span>React</span><span>TypeScript</span><span>JavaScript</span><span>HTML5</span><span>CSS3</span><span>Bootstrap</span></div>
         </div>
         <div class="skillset">
-          <h3>Data &amp; Infra</h3>
+          <h3 data-i18n="skills.g3">Data &amp; Infra</h3>
           <div class="chips"><span>MySQL</span><span>PostgreSQL</span><span>SQL Server</span><span>EF Core</span><span>Pandas</span><span>Docker</span><span>Redis</span></div>
         </div>
         <div class="skillset">
-          <h3>Domains</h3>
-          <div class="chips"><span>AI Governance</span><span>PDPL / SDAIA</span><span>SaaS Architecture</span><span>Payments</span><span>Monitoring</span><span>Game Dev (UE5)</span></div>
+          <h3 data-i18n="skills.g4">Domains</h3>
+          <div class="chips"><span data-i18n="dom.ai">AI Governance</span><span>PDPL / SDAIA</span><span data-i18n="dom.saas">SaaS Architecture</span><span data-i18n="dom.pay">Payments</span><span data-i18n="dom.mon">Monitoring</span><span data-i18n="dom.game">Game Dev (UE5)</span></div>
         </div>
         <div class="skillset">
-          <h3>Information Systems &amp; Leadership</h3>
-          <div class="chips"><span>Software Engineering</span><span>Systems Analysis &amp; Design</span><span>Decision Making</span><span>Requirements Engineering</span><span>Project Management</span><span>Database Design</span><span>IT Strategy</span><span>Business Process Modeling</span><span>Solution Architecture</span><span>Team Leadership</span></div>
+          <h3 data-i18n="skills.g5">Information Systems &amp; Leadership</h3>
+          <div class="chips"><span data-i18n="is.se">Software Engineering</span><span data-i18n="is.sad">Systems Analysis &amp; Design</span><span data-i18n="is.dm">Decision Making</span><span data-i18n="is.re">Requirements Engineering</span><span data-i18n="is.pm">Project Management</span><span data-i18n="is.db">Database Design</span><span data-i18n="is.it">IT Strategy</span><span data-i18n="is.bpm">Business Process Modeling</span><span data-i18n="is.arch">Solution Architecture</span><span data-i18n="is.lead">Team Leadership</span></div>
         </div>
       </div>
     </div>
@@ -288,27 +305,27 @@
   <!-- CONTACT -->
   <section class="section section--alt" id="contact">
     <div class="container contact">
-      <p class="section__kicker">04 — Contact</p>
-      <h2 class="section__title">Let's build something.</h2>
-      <p class="contact__lede">
+      <p class="section__kicker"><span class="num">04</span> — <span data-i18n="contact.kicker">Contact</span></p>
+      <h2 class="section__title" data-i18n="contact.title">Let's build something.</h2>
+      <p class="contact__lede" data-i18n="contact.lede">
         Available for freelance and contract work. Whether it's a SaaS product, a mobile app,
         or an AI-governance system — reach out and let's talk.
       </p>
       <div class="contact__actions">
-        <a href="mailto:alasmari@gmail.com?subject=Project%20inquiry" class="btn btn--primary btn--lg">✉ Contact for work</a>
+        <a href="mailto:alasmari@gmail.com?subject=Project%20inquiry" class="btn btn--primary btn--lg" data-i18n="contact.cta">✉ Contact for work</a>
       </div>
       <div class="contact__grid">
         <a class="link-card" href="mailto:alasmari@gmail.com">
           <span class="link-card__icon">✉</span>
-          <span><strong>Email</strong><br />alasmari@gmail.com</span>
+          <span><strong data-i18n="c.email">Email</strong><br />alasmari@gmail.com</span>
         </a>
         <a class="link-card" href="https://wa.me/966556306304" target="_blank" rel="noopener">
           <span class="link-card__icon">✆</span>
-          <span><strong>WhatsApp</strong><br />+966 55 630 6304</span>
+          <span><strong data-i18n="c.wa">WhatsApp</strong><br /><span class="ltr">+966 55 630 6304</span></span>
         </a>
         <a class="link-card" href="https://www.linkedin.com/in/eng-al-asmari/" target="_blank" rel="noopener">
           <span class="link-card__icon">in</span>
-          <span><strong>LinkedIn</strong><br />eng-al-asmari</span>
+          <span><strong data-i18n="c.li">LinkedIn</strong><br />eng-al-asmari</span>
         </a>
         <a class="link-card" href="https://amasmare.github.io/" target="_blank" rel="noopener">
           <span class="link-card__icon">⌘</span>
@@ -316,11 +333,11 @@
         </a>
         <div class="link-card link-card--static">
           <span class="link-card__icon">✓</span>
-          <span><strong>Verified Freelancer</strong><br />License FL-758614965</span>
+          <span><strong data-i18n="creds.fl.t">Verified Freelancer</strong><br /><span data-i18n="creds.fl.s">License FL-758614965</span></span>
         </div>
         <div class="link-card link-card--static">
           <span class="link-card__icon">🛡</span>
-          <span><strong>SCE Accredited Engineer</strong><br />Membership #414681</span>
+          <span><strong data-i18n="creds.sce.t">SCE Accredited Engineer</strong><br /><span data-i18n="creds.sce.s">Membership #414681</span></span>
         </div>
       </div>
     </div>
@@ -328,8 +345,8 @@
 
   <footer class="footer">
     <div class="container footer__inner">
-      <span>© <span id="year"></span> Eng. Abdullah Mohammed Alasmari</span>
-      <span class="footer__made">Built with HTML · CSS · JS</span>
+      <span data-i18n="footer.copy">© <span id="year"></span> Eng. Abdullah Mohammed Alasmari</span>
+      <span class="footer__made" data-i18n="footer.made">Built with HTML · CSS · JS</span>
     </div>
   </footer>
 

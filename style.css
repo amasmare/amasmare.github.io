@@ -42,6 +42,10 @@ a{color:inherit;text-decoration:none}
 .nav__links a.btn:hover{color:#fff}
 .nav__toggle{display:none;flex-direction:column;gap:5px;background:none;border:0;cursor:pointer}
 .nav__toggle span{width:24px;height:2px;background:var(--text);transition:.3s}
+.lang-btn{margin-inline-start:18px;display:inline-flex;align-items:center;gap:6px;
+  font-family:inherit;font-size:.88rem;font-weight:600;color:var(--text);cursor:pointer;
+  padding:8px 14px;border-radius:999px;background:var(--surface);border:1px solid var(--border-solid);transition:.2s}
+.lang-btn:hover{border-color:var(--brand);color:var(--brand)}
 
 /* BUTTONS */
 .btn{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:.95rem;
@@ -67,7 +71,8 @@ a{color:inherit;text-decoration:none}
 @keyframes float{to{transform:translateY(-22px) scale(1.05)}}
 .hero__inner{position:relative;z-index:1;padding-top:90px}
 .hero__eyebrow{color:var(--accent);font-weight:600;font-family:'JetBrains Mono',monospace;margin-bottom:14px}
-.hero__name{font-size:clamp(2.8rem,8vw,5.2rem);font-weight:900;letter-spacing:-2px;line-height:1.02;
+.hero__name{font-size:clamp(2.8rem,8vw,5.2rem);font-weight:900;letter-spacing:-1.5px;line-height:1.1;
+  padding-bottom:.08em;
   background:linear-gradient(120deg,var(--text) 25%,var(--brand) 70%,var(--brand-2));
   -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 .hero__role{font-size:clamp(1.1rem,2.6vw,1.7rem);font-weight:700;margin-top:14px;color:var(--text)}
@@ -80,6 +85,24 @@ a{color:inherit;text-decoration:none}
 .hero__scroll{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);z-index:1;
   font-size:1.4rem;color:var(--muted);animation:bounce 1.8s infinite}
 @keyframes bounce{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,8px)}}
+
+/* CREDENTIALS STRIP */
+.creds{background:var(--bg-alt);border-top:1px solid var(--border-solid);border-bottom:1px solid var(--border-solid)}
+.creds__inner{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;padding:28px 24px}
+.cred{display:flex;align-items:center;gap:14px}
+.cred:not(:last-child){border-right:1px solid var(--border-solid);padding-right:24px}
+.cred__icon{display:grid;place-items:center;width:46px;height:46px;flex-shrink:0;border-radius:12px;
+  font-size:1.3rem;background:var(--surface);border:1px solid var(--border-solid)}
+.cred__text{font-size:.92rem;color:var(--muted);line-height:1.45}
+.cred__text strong{color:var(--text);font-size:.96rem}
+@media(max-width:860px){
+  .creds__inner{grid-template-columns:1fr 1fr;gap:18px}
+  .cred:nth-child(2n){border-right:0;padding-right:0}
+}
+@media(max-width:520px){
+  .creds__inner{grid-template-columns:1fr}
+  .cred{border-right:0!important;padding-right:0!important}
+}
 
 /* SECTIONS */
 .section{padding:110px 0}
@@ -183,3 +206,24 @@ a{color:inherit;text-decoration:none}
   .footer__inner{flex-direction:column}
 }
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ===== RTL / ARABIC ===== */
+[dir="rtl"] body,[dir="rtl"]{font-family:'Cairo','Inter',system-ui,sans-serif}
+[dir="rtl"] .hero__eyebrow,[dir="rtl"] .section__kicker{font-family:'Cairo',monospace}
+/* keep latin numerals & tech terms in their natural LTR run */
+[dir="rtl"] .section__kicker .num,[dir="rtl"] .card__stack li,
+[dir="rtl"] .hero__role span{direction:ltr;unicode-bidi:isolate;display:inline-block}
+[dir="rtl"] .stat__num{direction:ltr;unicode-bidi:isolate}
+[dir="rtl"] .card__stack{direction:ltr}
+[dir="rtl"] .cred:not(:last-child){border-right:0;border-left:1px solid var(--border-solid);
+  padding-right:0;padding-left:24px}
+[dir="rtl"] .skillset::after{background:linear-gradient(270deg,var(--brand),var(--brand-2))}
+/* Arabic glyphs have deeper descenders — give headings room so nothing clips */
+[dir="rtl"] .hero__name{letter-spacing:0;line-height:1.3;padding-bottom:.18em}
+[dir="rtl"] .section__title{line-height:1.45;padding-bottom:.12em}
+[dir="rtl"] .stat__label{display:block;margin-top:6px}
+/* phone numbers stay left-to-right inside RTL text */
+[dir="rtl"] .ltr{direction:ltr;unicode-bidi:isolate;display:inline-block}
+@media(max-width:860px){
+  [dir="rtl"] .cred:nth-child(2n){border-left:0;padding-left:0}
+}
