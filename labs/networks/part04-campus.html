@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الجزء الرابع – شبكات المباني المتجاورة (Campus) | المختصر المفيد</title>
+<style>
+#net-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.45}
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#f0f4f0;--surface:#fff;--surface2:#f0f7f3;--surface3:#e0ede6;--accent:#006633;--accent2:#00843d;--text:#1a2e22;--text2:#6b8577;--border:#c8ddd2;--success:#10b981;--error:#ef4444;--radius:12px}
+body{background:var(--bg);color:var(--text);font-family:'Segoe UI',Tahoma,Arial,sans-serif;min-height:100vh;direction:rtl}
+a{color:var(--accent);text-decoration:none}
+.topbar{position:relative;z-index:5;background:#006633;border-bottom:3px solid #c9a227;padding:10px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.topbar-brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.05rem;color:#fff}
+.topbar-brand .logo{width:32px;height:32px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:8px;display:flex;align-items:center;justify-content:center}
+.topbar-links{display:flex;gap:12px;font-size:.8rem;flex-wrap:wrap}
+.topbar-links a{color:rgba(255,255,255,.8);transition:color .2s}
+.topbar-links a:hover{color:#e8c13a}
+.lab-header{position:relative;z-index:5;background:linear-gradient(135deg,#006633 0%,#00843d 60%,#004d28 100%);padding:30px 24px;text-align:center;border-bottom:4px solid #c9a227}
+.lab-badge{display:inline-block;background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.3);color:#fff;padding:4px 14px;border-radius:20px;font-size:.8rem;margin-bottom:12px}
+.lab-header h1{font-size:1.9rem;font-weight:800;color:#fff;margin-bottom:8px}
+.lab-header p{color:rgba(255,255,255,.85);font-size:.95rem}
+.chapter-tags{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:14px}
+.chapter-tag{background:rgba(255,255,255,.15);color:#fff;padding:3px 12px;border-radius:20px;font-size:.78rem}
+.nav-bar{position:relative;z-index:5;background:var(--surface);border-bottom:1px solid var(--border);padding:10px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.back-link{color:var(--accent);font-size:.85rem}
+.tabs-wrapper{position:relative;z-index:5;background:var(--surface);border-bottom:2px solid var(--border);padding:0 24px;display:flex;gap:4px;overflow-x:auto}
+.tab-btn{padding:14px 18px;border:none;background:none;color:var(--text2);cursor:pointer;font-size:.88rem;font-weight:600;border-bottom:3px solid transparent;margin-bottom:-2px;white-space:nowrap;transition:all .2s}
+.tab-btn.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab-btn:hover:not(.active){color:var(--text)}
+.container{position:relative;z-index:5;max-width:960px;margin:0 auto;padding:24px}
+.tab-content{display:none}
+.tab-content.active{display:block}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px}
+.card h2{font-size:1.1rem;margin-bottom:14px;color:var(--accent)}
+.card h3{font-size:.95rem;margin-bottom:10px;color:var(--accent)}
+.subtitle{color:var(--text2);font-size:.88rem;margin-bottom:18px;line-height:1.7}
+.btn{padding:9px 20px;border:none;border-radius:8px;font-size:.88rem;cursor:pointer;transition:all .2s;font-weight:600}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:var(--accent2)}
+.btn-ghost{background:transparent;border:1px solid var(--border);color:var(--text2)}
+.btn-ghost:hover{border-color:var(--accent);color:var(--text)}
+.btn-sm{padding:5px 12px;font-size:.78rem}
+.alert{padding:12px 16px;border-radius:8px;margin:10px 0;font-size:.88rem;line-height:1.6}
+.alert-success{background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.35);color:#065f46}
+.alert-warn{background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.35);color:#7a6010}
+.alert-danger{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);color:#7f1d1d}
+.score-badge{display:inline-block;background:rgba(0,102,51,.08);border:1px solid rgba(0,102,51,.25);border-radius:20px;padding:4px 14px;font-size:.8rem;color:var(--accent);margin-bottom:16px}
+.score-chip{background:var(--surface2);border:1px solid var(--border);border-radius:20px;padding:4px 14px;font-size:.8rem;color:var(--text2)}
+.score-chip span{color:var(--accent);font-weight:700}
+.match-container{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:16px 0}
+.match-col h4{font-size:.85rem;color:var(--text2);margin-bottom:10px;letter-spacing:1px}
+.match-item{background:var(--surface2);border:2px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:8px;cursor:pointer;transition:all .2s;font-size:.86rem;user-select:none}
+.match-item:hover{border-color:var(--accent)}
+.match-item.selected{border-color:var(--accent);background:rgba(0,102,51,.08);color:var(--accent)}
+.match-item.matched{border-color:var(--success);background:rgba(16,185,129,.12);color:#065f46;cursor:default}
+.match-item.wrong-match{border-color:var(--error);background:rgba(239,68,68,.1);animation:shake .3s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+th{background:var(--surface2);padding:10px 12px;text-align:right;color:var(--text2);font-weight:600;border-bottom:2px solid var(--border)}
+td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:middle}
+tr:hover td{background:rgba(0,102,51,.04)}
+select{background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);padding:6px 10px;font-size:.85rem;cursor:pointer;width:100%}
+select:focus{outline:none;border-color:var(--accent)}
+.quiz-q{margin-bottom:24px}
+.quiz-q p{font-weight:600;margin-bottom:12px;line-height:1.5}
+.quiz-opt{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:11px 16px;cursor:pointer;transition:all .2s;font-size:.88rem;text-align:right;width:100%;margin-bottom:8px;color:var(--text);display:block}
+.quiz-opt:hover{border-color:var(--accent)}
+.quiz-opt.correct{border-color:var(--success);background:rgba(16,185,129,.12);color:#065f46}
+.quiz-opt.incorrect{border-color:var(--error);background:rgba(239,68,68,.1);color:#7f1d1d}
+.quiz-opt:disabled{cursor:default}
+.prog-wrap{background:var(--surface3);border-radius:20px;height:8px;margin:8px 0;overflow:hidden}
+.prog-fill{height:100%;border-radius:20px;background:linear-gradient(90deg,#006633,#00843d);transition:width .4s}
+.net-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:14px;margin:16px 0}
+.scenario-card{background:var(--surface2);border:2px solid var(--border);border-radius:10px;padding:18px;text-align:center;cursor:pointer;transition:all .2s}
+.scenario-card:hover{border-color:var(--accent)}
+.scenario-card.selected{border-color:var(--success);background:rgba(16,185,129,.1)}
+.scenario-card.wrong{border-color:var(--error);background:rgba(239,68,68,.08)}
+.scenario-icon{font-size:1.9rem;margin-bottom:8px}
+.scenario-name{font-weight:700;margin-bottom:4px}
+.scenario-desc{font-size:.74rem;color:var(--text2);line-height:1.4}
+.correct-row td{background:rgba(16,185,129,.1)!important}
+.wrong-row td{background:rgba(239,68,68,.08)!important}
+@media(max-width:600px){.match-container{grid-template-columns:1fr}.net-grid{grid-template-columns:1fr 1fr}}
+footer{position:relative;z-index:5;background:#006633;padding:20px 30px;text-align:center;margin-top:30px}
+footer p{color:rgba(255,255,255,.8);font-size:.78rem;line-height:2}
+footer strong{color:#e8c13a}
+
+</style>
+</head>
+<body>
+<canvas id="net-canvas"></canvas>
+<div class="topbar">
+  <div class="topbar-brand"><div class="logo">🌐</div>المختصر المفيد · مختبرات الشبكات</div>
+  <div class="topbar-links">
+    <a href="index.html">الرئيسية</a>
+    <a href="part01-overview.html">1 نظرة عامة عن ش</a>
+    <a href="part02-lan-ethernet.html">2 الشبكات المحلي</a>
+    <a href="part03-enterprise-fiber.html">3 الشبكات المؤسس</a>
+    <a href="part04-campus.html" style="color:#e8c13a">4 شبكات المباني </a>
+    <a href="part05-wan-physical.html">5 الشبكات الواسع</a>
+    <a href="part06-basics.html">6 أساسيات تكنولو</a>
+    <a href="part07-osi.html">7 النموذج المرجع</a>
+    <a href="part08-lan-tech.html">8 تكنولوجيا الشب</a>
+    <a href="part09-wan-tech.html">9 تكنولوجيا الشب</a>
+    <a href="part10-all-together.html">10 الصورة الكاملة</a>
+    <a href="part11-practical.html">11 التدريب العملي</a>
+    <a href="capstone.html">الشامل الاختبار الشام</a>
+  </div>
+</div>
+<div class="lab-header">
+  <div class="lab-badge">الجزء الرابع</div>
+  <h1>🏫 شبكات المباني المتجاورة (Campus)</h1>
+  <p>البنية التحتية لشبكة المباني المتجاورة وتركيبها وأمثلة عملية</p>
+  <div class="chapter-tags"><span class="chapter-tag">Campus Backbone</span><span class="chapter-tag">ربط المباني</span><span class="chapter-tag">تصميم متدرّج</span></div>
+</div>
+<div class="nav-bar">
+  <a href="index.html" class="back-link">→ العودة للمختبرات</a>
+  <div style="display:flex;align-items:center;gap:10px">
+    <span class="score-chip">الاختبار: <span id="stotal">0</span>/8</span>
+    <button class="btn btn-ghost btn-sm" onclick="resetAll()">إعادة ضبط</button>
+    <button class="btn btn-primary btn-sm" onclick="saveScore()">حفظ</button>
+  </div>
+</div>
+<div class="tabs-wrapper">
+  <button class="tab-btn active" onclick="switchTab(this,'0')">مطابقة</button>
+  <button class="tab-btn" onclick="switchTab(this,'1')">تصنيف</button>
+  <button class="tab-btn" onclick="switchTab(this,'2')">سيناريوهات</button>
+  <button class="tab-btn" onclick="switchTab(this,'3')">اختبار المعرفة</button>
+</div>
+<div class="tab-content active" id="tab0"><div class="container"><div class="card">
+  <h2>🔗 طابق المصطلح بتعريفه</h2><p class="subtitle">انقر مصطلحاً من اليمين ثم تعريفه من اليسار.</p>
+  <div class="score-badge" id="m-score">تمت المطابقة: 0 / 0</div>
+  <div class="match-container"><div><div class="match-col"><h4>المصطلح</h4></div><div id="m-left"></div></div><div><div class="match-col"><h4>التعريف</h4></div><div id="m-right"></div></div></div>
+  <button class="btn btn-ghost btn-sm" onclick="buildMatch()">إعادة تعيين</button><div id="m-feedback" style="margin-top:12px"></div>
+</div></div></div>
+<div class="tab-content" id="tab1"><div class="container"><div class="card">
+  <h2>🔍 صنّف كل بند</h2><p class="subtitle">اختر التصنيف الصحيح لكل بند.</p>
+  <table><thead><tr><th>البند</th><th>التصنيف</th><th>الحالة</th></tr></thead><tbody id="t-tbody"></tbody></table>
+  <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap"><button class="btn btn-primary" onclick="checkTable()">تحقق</button><button class="btn btn-ghost btn-sm" onclick="buildTable()">إعادة تعيين</button></div>
+  <div id="t-feedback" style="margin-top:12px"></div>
+</div></div></div>
+<div class="tab-content" id="tab2"><div class="container"><div class="card">
+  <h2>🗺️ سيناريوهات عملية</h2><p class="subtitle">اختر الإجابة المناسبة لكل سيناريو.</p>
+  <div class="score-badge" id="s-score">النتيجة: 0 / 0</div>
+  <h3 id="s-num">السيناريو 1</h3><p id="s-q" style="margin:12px 0;line-height:1.7"></p>
+  <div class="net-grid" id="s-options"></div><div id="s-feedback" style="margin-top:12px"></div>
+  <button class="btn btn-primary" id="s-next" onclick="nextScenario()" style="margin-top:16px;display:none">التالي ←</button>
+</div></div></div>
+
+<div class="tab-content" id="tab3"><div class="container"><div class="card">
+  <h2>📝 اختبار المعرفة</h2><p class="subtitle">8 أسئلة. تُحفظ نتيجتك تلقائياً.</p>
+  <div class="score-badge" id="quiz-score">النتيجة: 0 / 8</div>
+  <div class="prog-wrap"><div class="prog-fill" id="quiz-prog" style="width:0%"></div></div><div id="quiz-container"></div>
+</div></div></div>
+<footer><p>صُمِّمت بواسطة <strong>م. عبدالله الأسمري</strong> · مختبرات «المختصر المفيد في شبكات الكمبيوتر» — محمود يوسف أسعد</p></footer>
+<script>
+var LAB_ID="net_p04";
+var MATCH=[{"a":"Campus Network","b":"شبكة تربط عدة مبانٍ متجاورة في موقع واحد"},{"a":"Backbone","b":"الوصلة الرئيسية عالية السرعة بين المباني"},{"a":"الفايبر بين المباني","b":"الوسط المفضّل لربط المباني للمسافات والمناعة"},{"a":"موزّع المبنى (Building Switch)","b":"يجمّع اتصالات الطوابق داخل المبنى"},{"a":"غرفة الاتصالات الرئيسية","b":"تحتوي أجهزة الـ Core وربط المباني"},{"a":"التصميم المتدرّج","b":"تقسيم الشبكة لمستويات Access/Distribution/Core"}];
+var TABLE=[{"item":"الوسط المفضّل بين المباني","ans":"Fiber","opts":["UTP","Fiber","Coaxial"]},{"item":"الوصلة الرئيسية بين المباني","ans":"Backbone","opts":["Patch Cord","Backbone","Loopback"]},{"item":"تربط طوابق المبنى الواحد","ans":"سويتش المبنى","opts":["سويتش المبنى","الراوتر","المودم"]},{"item":"يربط الأجهزة الطرفية","ans":"Access","opts":["Access","Core","WAN"]},{"item":"تصميم الحرم يكون","ans":"متدرّج","opts":["عشوائي","متدرّج","مسطّح"]},{"item":"سبب استخدام الفايبر بين المباني","ans":"المسافة والمناعة","opts":["اللون","المسافة والمناعة","الوزن"]}];
+var SCEN=[{"q":"تربط 4 مبانٍ في حرم جامعي تفصلها مئات الأمتار. ما الوسط الأنسب للربط بينها؟","ans":"Fiber","opts":[{"n":"UTP","i":"🟫","d":"100م فقط"},{"n":"Fiber","i":"🔦","d":"مسافات"},{"n":"Wi-Fi","i":"📶","d":""},{"n":"Serial","i":"🧵","d":""}],"explain":"المسافات بين المباني تتجاوز حد النحاس، فالفايبر هو الحل."},{"q":"ما اسم الوصلة الرئيسية عالية السرعة التي تربط المباني؟","ans":"Backbone","opts":[{"n":"Patch Cord","i":"🔌","d":""},{"n":"Backbone","i":"🦴","d":"عمود فقري"},{"n":"Loopback","i":"🔄","d":""},{"n":"Crossover","i":"❎","d":""}],"explain":"الـ Backbone هو العمود الفقري بين المباني."},{"q":"لتنظيم شبكة الحرم وسهولة توسعتها، يُتبع تصميم؟","ans":"متدرّج","opts":[{"n":"مسطّح","i":"➖","d":""},{"n":"متدرّج","i":"🪜","d":"Access/Dist/Core"},{"n":"عشوائي","i":"🎲","d":""},{"n":"حلقي فقط","i":"⭕","d":""}],"explain":"التصميم المتدرّج (Hierarchical) أسهل في الإدارة والتوسعة."},{"q":"أين توضع أجهزة الـ Core وربط المباني عادةً؟","ans":"غرفة الاتصالات الرئيسية","opts":[{"n":"غرفة الاتصالات الرئيسية","i":"🏢","d":""},{"n":"مكتب المستخدم","i":"🪑","d":""},{"n":"خارج المبنى","i":"🌳","d":""},{"n":"في الكابل","i":"🧵","d":""}],"explain":"غرفة الاتصالات الرئيسية تضم أجهزة المركز وربط المباني."}];
+var QUIZ=[{"q":"شبكة المباني المتجاورة تُسمى؟","opts":["LAN","Campus","WAN","PAN"],"ans":1,"exp":"Campus Network."},{"q":"الوسط المفضّل بين مباني الحرم؟","opts":["UTP","Fiber","Coax","Wi-Fi"],"ans":1,"exp":"الفايبر للمسافة والمناعة."},{"q":"الوصلة الرئيسية بين المباني؟","opts":["Patch Cord","Backbone","Loopback","Trunk"],"ans":1,"exp":"Backbone."},{"q":"تصميم شبكة الحرم يكون؟","opts":["مسطّح","متدرّج","عشوائي","بلا تخطيط"],"ans":1,"exp":"متدرّج/هرمي."},{"q":"سبب تجنّب UTP بين المباني البعيدة؟","opts":["لونه","حد 100 متر","وزنه","سعره"],"ans":1,"exp":"حد المسافة 100م."},{"q":"المستوى الذي يربط الأجهزة الطرفية؟","opts":["Access","Core","WAN","MAN"],"ans":0,"exp":"Access."},{"q":"أين توضع أجهزة المركز Core؟","opts":["مكتب المستخدم","غرفة الاتصالات الرئيسية","خارج المبنى","في المقبس"],"ans":1,"exp":"الغرفة الرئيسية."},{"q":"فائدة التصميم المتدرّج؟","opts":["تعقيد","سهولة الإدارة والتوسعة","بطء","تكلفة فقط"],"ans":1,"exp":"إدارة وتوسعة أسهل."}];
+function switchTab(btn,id){
+  var cs=document.querySelectorAll('.tab-content');
+  for(var i=0;i<cs.length;i++)cs[i].classList.remove('active');
+  var t=document.getElementById('tab'+id);if(t)t.classList.add('active');
+  var bs=document.querySelectorAll('.tab-btn');
+  for(var j=0;j<bs.length;j++)bs[j].classList.remove('active');
+  if(btn)btn.classList.add('active');
+}
+
+/* مطابقة */
+var mSel=null,mDone=0;
+function buildMatch(){
+  if(typeof MATCH==='undefined'||!MATCH.length)return;
+  mSel=null;mDone=0;
+  var right=MATCH.slice().sort(function(){return Math.random()-0.5;});
+  document.getElementById('m-left').innerHTML=MATCH.map(function(d,i){return '<div class="match-item" id="ml-'+i+'" onclick="mPickL('+i+')">'+d.a+'</div>';}).join('');
+  document.getElementById('m-right').innerHTML=right.map(function(d,i){return '<div class="match-item" id="mr-'+i+'" data-b="'+encodeURIComponent(d.b)+'" onclick="mPickR('+i+')">'+d.b+'</div>';}).join('');
+  document.getElementById('m-score').textContent='تمت المطابقة: 0 / '+MATCH.length;
+  document.getElementById('m-feedback').innerHTML='';
+}
+function mPickL(i){var l=document.querySelectorAll('#m-left .match-item');for(var k=0;k<l.length;k++)l[k].classList.remove('selected');document.getElementById('ml-'+i).classList.add('selected');mSel=i;}
+function mPickR(i){
+  if(mSel===null)return;
+  var r=document.getElementById('mr-'+i),b=decodeURIComponent(r.getAttribute('data-b'));
+  if(b===MATCH[mSel].b){
+    var l=document.getElementById('ml-'+mSel);l.classList.remove('selected');l.classList.add('matched');l.style.pointerEvents='none';
+    r.classList.add('matched');r.style.pointerEvents='none';mDone++;
+    document.getElementById('m-score').textContent='تمت المطابقة: '+mDone+' / '+MATCH.length;
+    if(mDone===MATCH.length)document.getElementById('m-feedback').innerHTML='<div class="alert alert-success">🎉 ممتاز! طابقت الكل بشكل صحيح.</div>';
+  }else{
+    var l2=document.getElementById('ml-'+mSel);l2.classList.add('wrong-match');r.classList.add('wrong-match');
+    (function(l2,r){setTimeout(function(){l2.classList.remove('wrong-match','selected');r.classList.remove('wrong-match');},700);})(l2,r);
+  }
+  mSel=null;
+}
+
+/* تصنيف */
+function buildTable(){
+  if(typeof TABLE==='undefined'||!TABLE.length)return;
+  document.getElementById('t-tbody').innerHTML=TABLE.map(function(d,i){
+    return '<tr id="tr-'+i+'"><td style="font-weight:600">'+d.item+'</td><td><select id="ts-'+i+'"><option value="">-- اختر --</option>'+d.opts.map(function(o){return '<option value="'+o+'">'+o+'</option>';}).join('')+'</select></td><td id="tc-'+i+'" style="font-size:.8rem"></td></tr>';
+  }).join('');
+  document.getElementById('t-feedback').innerHTML='';
+}
+function checkTable(){
+  var ok=0;
+  TABLE.forEach(function(d,i){
+    var s=document.getElementById('ts-'+i),row=document.getElementById('tr-'+i),c=document.getElementById('tc-'+i);
+    if(!s.value){c.textContent='—';row.className='';return;}
+    if(s.value===d.ans){ok++;row.className='correct-row';c.innerHTML='<span style="color:#065f46">✓ صحيح</span>';}
+    else{row.className='wrong-row';c.innerHTML='<span style="color:#7f1d1d">✗ الصحيح: '+d.ans+'</span>';}
+  });
+  document.getElementById('t-feedback').innerHTML='<div class="alert '+(ok===TABLE.length?'alert-success':'alert-warn')+'">النتيجة: '+ok+' / '+TABLE.length+'</div>';
+}
+
+/* سيناريوهات */
+var sIdx=0,sOk=0;
+function loadScenario(){
+  if(typeof SCEN==='undefined'||!SCEN.length)return;
+  var s=SCEN[sIdx];
+  document.getElementById('s-num').textContent='السيناريو '+(sIdx+1)+' من '+SCEN.length;
+  document.getElementById('s-q').textContent=s.q;
+  document.getElementById('s-feedback').innerHTML='';
+  document.getElementById('s-next').style.display='none';
+  document.getElementById('s-options').innerHTML=s.opts.map(function(o){return '<div class="scenario-card" onclick="pickScenario(\''+o.n+'\')"><div class="scenario-icon">'+o.i+'</div><div class="scenario-name">'+o.n+'</div><div class="scenario-desc">'+o.d+'</div></div>';}).join('');
+  document.getElementById('s-score').textContent='النتيجة: '+sOk+' / '+Math.min(sIdx,SCEN.length);
+}
+function pickScenario(ch){
+  var s=SCEN[sIdx],cards=document.querySelectorAll('#s-options .scenario-card');
+  for(var k=0;k<cards.length;k++){cards[k].style.pointerEvents='none';var nm=cards[k].querySelector('.scenario-name').textContent;if(nm===s.ans)cards[k].classList.add('selected');else if(nm===ch&&ch!==s.ans)cards[k].classList.add('wrong');}
+  if(ch===s.ans)sOk++;
+  document.getElementById('s-feedback').innerHTML='<div class="alert '+(ch===s.ans?'alert-success':'alert-danger')+'">'+(ch===s.ans?'✅ صحيح! ':'❌ غير صحيح. ')+s.explain+'</div>';
+  document.getElementById('s-next').style.display='inline-block';
+  document.getElementById('s-score').textContent='النتيجة: '+sOk+' / '+(sIdx+1);
+}
+function nextScenario(){
+  sIdx++;
+  if(sIdx>=SCEN.length){
+    document.getElementById('s-options').innerHTML='';document.getElementById('s-q').textContent='';
+    document.getElementById('s-num').textContent='اكتمل القسم!';
+    document.getElementById('s-feedback').innerHTML='<div class="alert alert-success">حصلت على '+sOk+'/'+SCEN.length+'.<br><button class="btn btn-ghost btn-sm" onclick="sIdx=0;sOk=0;loadScenario()" style="margin-top:10px">إعادة المحاولة</button></div>';
+    return;
+  }
+  loadScenario();
+}
+
+/* الاختبار */
+var qScore=0,qAns=0;
+function buildQuiz(){
+  if(typeof QUIZ==='undefined'||!QUIZ.length)return;
+  document.getElementById('quiz-container').innerHTML=QUIZ.map(function(q,i){return '<div class="quiz-q" id="qq-'+i+'"><p>'+(i+1)+'. '+q.q+'</p>'+q.opts.map(function(o,j){return '<button class="quiz-opt" onclick="answerQuiz('+i+','+j+')">'+o+'</button>';}).join('')+'<div id="qfb-'+i+'" style="margin-top:6px"></div></div>';}).join('');
+}
+function answerQuiz(qi,oi){
+  var q=QUIZ[qi],btns=document.querySelectorAll('#qq-'+qi+' .quiz-opt');
+  for(var k=0;k<btns.length;k++)btns[k].disabled=true;
+  btns[q.ans].classList.add('correct');
+  if(oi!==q.ans)btns[oi].classList.add('incorrect');else qScore++;
+  qAns++;
+  document.getElementById('qfb-'+qi).innerHTML='<div class="alert '+(oi===q.ans?'alert-success':'alert-danger')+'" style="font-size:.82rem">'+(oi===q.ans?'✅ صحيح! ':'❌ غير صحيح. ')+q.exp+'</div>';
+  document.getElementById('quiz-score').textContent='النتيجة: '+qScore+' / '+QUIZ.length;
+  document.getElementById('quiz-prog').style.width=(qAns/QUIZ.length*100)+'%';
+  if(qAns===QUIZ.length){
+    var pct=Math.round(qScore/QUIZ.length*100);
+    localStorage.setItem(LAB_ID,JSON.stringify({score:qScore,total:QUIZ.length,pct:pct}));
+    document.getElementById('stotal').textContent=qScore+'/'+QUIZ.length;
+    document.getElementById('quiz-container').insertAdjacentHTML('beforeend','<div class="alert '+(pct>=90?'alert-success':pct>=60?'alert-warn':'alert-danger')+'" style="margin-top:20px;font-weight:700">🎓 انتهى الاختبار! نتيجتك: '+qScore+'/'+QUIZ.length+' ('+pct+'%) — '+(pct>=90?'ممتاز 🏆':pct>=75?'جيد جداً ⭐':pct>=60?'جيد ✓':'يحتاج مراجعة 📖')+'<br><a href="index.html" style="color:var(--accent);font-size:.85rem;display:inline-block;margin-top:8px">← العودة للمختبرات</a></div>');
+  }
+}
+function resetAll(){localStorage.removeItem(LAB_ID);location.reload();}
+function saveScore(){if(qAns>0){var pct=Math.round(qScore/QUIZ.length*100);localStorage.setItem(LAB_ID,JSON.stringify({score:qScore,total:QUIZ.length,pct:pct}));document.getElementById('stotal').textContent=qScore+'/'+QUIZ.length;}}
+
+/* حاسبة التقسيم */
+function ipToInt(ip){return ip.split('.').reduce(function(a,o){return(a<<8)+(+o);},0)>>>0;}
+function intToIp(n){return [24,16,8,0].map(function(s){return(n>>>s)&255;}).join('.');}
+function calcSubnet(){
+  var el=document.getElementById('ip-in');if(!el)return;
+  var ip=el.value.trim(),p=parseInt(document.getElementById('pfx-in').value,10),out=document.getElementById('calc-out');
+  var parts=ip.split('.');
+  if(parts.length!==4||parts.some(function(o){return o===''||isNaN(o)||+o<0||+o>255;})||isNaN(p)||p<1||p>32){out.innerHTML='<div class="alert alert-danger">⚠️ أدخل عنوان IP صحيحاً وبادئة بين 1 و32.</div>';return;}
+  var mask=p===0?0:(0xFFFFFFFF<<(32-p))>>>0,ipi=ipToInt(ip),net=(ipi&mask)>>>0,bc=(net|(~mask>>>0))>>>0;
+  var hosts=p>=31?0:Math.pow(2,32-p)-2,first=p>=31?net:net+1,last=p>=31?bc:bc-1;
+  out.innerHTML='<table><tr><td style="font-weight:600">القناع (Mask)</td><td>'+intToIp(mask)+' (/'+p+')</td></tr>'+
+    '<tr><td style="font-weight:600">عنوان الشبكة</td><td>'+intToIp(net)+'</td></tr>'+
+    '<tr><td style="font-weight:600">عنوان البث</td><td>'+intToIp(bc)+'</td></tr>'+
+    '<tr><td style="font-weight:600">أول مضيف صالح</td><td>'+(hosts?intToIp(first):'—')+'</td></tr>'+
+    '<tr><td style="font-weight:600">آخر مضيف صالح</td><td>'+(hosts?intToIp(last):'—')+'</td></tr>'+
+    '<tr><td style="font-weight:600">عدد المضيفين الصالحين</td><td style="color:var(--accent);font-weight:700">'+hosts+'</td></tr></table>';
+}
+
+/* تشغيل */
+buildMatch();buildTable();loadScenario();buildQuiz();
+(function(){var s=JSON.parse(localStorage.getItem(LAB_ID)||'null');if(s&&document.getElementById('stotal'))document.getElementById('stotal').textContent=s.score+'/'+s.total;})();
+(function(){var c=document.getElementById('net-canvas');if(!c)return;var ctx=c.getContext('2d'),W,H,nodes=[],N=42,D=150;
+function rs(){W=c.width=innerWidth;H=c.height=innerHeight;}rs();window.addEventListener('resize',function(){rs();init();});
+function Nd(){this.x=Math.random()*W;this.y=Math.random()*H;this.vx=(Math.random()-.5)*.35;this.vy=(Math.random()-.5)*.35;this.r=Math.random()*2+1.5;this.g=Math.random()<.12;}
+function init(){nodes=[];for(var i=0;i<N;i++)nodes.push(new Nd());}init();
+function draw(){ctx.clearRect(0,0,W,H);for(var i=0;i<nodes.length;i++){var a=nodes[i];for(var j=i+1;j<nodes.length;j++){var b=nodes[j],dx=a.x-b.x,dy=a.y-b.y,d=Math.sqrt(dx*dx+dy*dy);if(d<D){ctx.beginPath();ctx.strokeStyle='rgba(0,150,80,'+(1-d/D)*.3+')';ctx.lineWidth=.7;ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();}}}
+for(var i=0;i<nodes.length;i++){var n=nodes[i];ctx.beginPath();ctx.arc(n.x,n.y,n.r,0,Math.PI*2);ctx.fillStyle=n.g?'rgba(201,162,39,.6)':'rgba(0,150,80,.45)';ctx.fill();n.x+=n.vx;n.y+=n.vy;if(n.x<0||n.x>W)n.vx*=-1;if(n.y<0||n.y>H)n.vy*=-1;}requestAnimationFrame(draw);}draw();})();
+
+
+</script>
+</body>
+</html>
